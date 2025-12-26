@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Calculator</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    button {
+      transition: all 0.15s ease-in-out;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+
+<body class="text-white">
+
+<!-- HEADER -->
+<header class="text-center py-8">
+  <h1 class="text-4xl font-extrabold text-yellow-400 tracking-wide">
+    Advanced Scientific Calculator
+  </h1>
+  <p class="text-gray-300 mt-2">Advanced Multi-Mode Calculator</p>
+</header>
+
+<!-- MAIN CONTAINER -->
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6 pb-20">
+
+<!-- SIMPLE CALCULATOR -->
+<div class="glass rounded-2xl p-6 shadow-xl">
+  <h2 class="text-2xl font-bold text-center mb-4">Simple Calculator</h2>
+
+  <input id="simpleDisplay" readonly
+    class="w-full h-20 mb-5 text-right text-3xl px-4 rounded-lg text-black font-semibold" />
+
+  <div class="grid grid-cols-4 gap-3">
+    <button onclick="pressSimple('7')" class="btn">7</button>
+    <button onclick="pressSimple('8')" class="btn">8</button>
+    <button onclick="pressSimple('9')" class="btn">9</button>
+    <button onclick="pressSimple('/')" class="op">÷</button>
+
+    <button onclick="pressSimple('4')" class="btn">4</button>
+    <button onclick="pressSimple('5')" class="btn">5</button>
+    <button onclick="pressSimple('6')" class="btn">6</button>
+    <button onclick="pressSimple('*')" class="op">×</button>
+
+    <button onclick="pressSimple('1')" class="btn">1</button>
+    <button onclick="pressSimple('2')" class="btn">2</button>
+    <button onclick="pressSimple('3')" class="btn">3</button>
+    <button onclick="pressSimple('-')" class="op">−</button>
+
+    <button onclick="pressSimple('0')" class="btn">0</button>
+    <button onclick="pressSimple('.')" class="btn">.</button>
+    <button onclick="clearSimple()" class="clear">C</button>
+    <button onclick="pressSimple('+')" class="op">+</button>
+
+    <button onclick="calculateSimple()" class="equal col-span-4">=</button>
+  </div>
+</div>
+
+<!-- SCIENTIFIC CALCULATOR -->
+<div class="glass rounded-2xl p-6 shadow-xl">
+  <h2 class="text-2xl font-bold text-center mb-4">Scientific Calculator</h2>
+
+  <input id="sciDisplay" readonly
+    class="w-full h-20 mb-5 text-right text-2xl px-4 rounded-lg text-black font-semibold" />
+
+  <div class="grid grid-cols-5 gap-3 text-sm">
+    <button onclick="pressSci('7')" class="btn">7</button>
+    <button onclick="pressSci('8')" class="btn">8</button>
+    <button onclick="pressSci('9')" class="btn">9</button>
+    <button onclick="pressSci('/')" class="op">÷</button>
+    <button onclick="factorial()" class="func">n!</button>
+
+    <button onclick="pressSci('4')" class="btn">4</button>
+    <button onclick="pressSci('5')" class="btn">5</button>
+    <button onclick="pressSci('6')" class="btn">6</button>
+    <button onclick="pressSci('*')" class="op">×</button>
+    <button onclick="log10()" class="func">log</button>
+
+    <button onclick="pressSci('1')" class="btn">1</button>
+    <button onclick="pressSci('2')" class="btn">2</button>
+    <button onclick="pressSci('3')" class="btn">3</button>
+    <button onclick="pressSci('-')" class="op">−</button>
+    <button onclick="sqrt()" class="func">√</button>
+
+    <button onclick="pressSci('0')" class="btn">0</button>
+    <button onclick="pressSci('.')" class="btn">.</button>
+    <button onclick="clearSci()" class="clear">C</button>
+    <button onclick="pressSci('+')" class="op">+</button>
+    <button onclick="pressSci('**')" class="func">^</button>
+
+    <button onclick="pressSci(Math.PI)" class="func">π</button>
+    <button onclick="pressSci('(')" class="func">(</button>
+    <button onclick="pressSci(')')" class="func">)</button>
+    <button onclick="pressSci('%')" class="func">mod</button>
+    <button onclick="pressSci('10**')" class="func">10ˣ</button>
+
+    <button onclick="calculateSci()" class="equal col-span-5">=</button>
+  </div>
+</div>
+</div>
+
+<!-- BUTTON STYLES -->
+<style>
+  .btn { background:#e5e7eb; color:#111; font-size:1.3rem; padding:14px; border-radius:12px; }
+  .op { background:#38bdf8; color:black; font-size:1.3rem; padding:14px; border-radius:12px; }
+  .func { background:#a78bfa; color:black; padding:14px; border-radius:12px; }
+  .clear { background:#ef4444; padding:14px; border-radius:12px; }
+  .equal { background:#22c55e; font-size:1.6rem; padding:14px; border-radius:12px; }
+</style>
+
+<!-- JAVASCRIPT -->
+<script>
+  function pressSimple(v){ simpleDisplay.value += v }
+  function clearSimple(){ simpleDisplay.value="" }
+  function calculateSimple(){ simpleDisplay.value=eval(simpleDisplay.value) }
+
+  function pressSci(v){ sciDisplay.value += v }
+  function clearSci(){ sciDisplay.value="" }
+  function calculateSci(){ sciDisplay.value=eval(sciDisplay.value) }
+  function sqrt(){ sciDisplay.value=Math.sqrt(eval(sciDisplay.value)) }
+  function log10(){ sciDisplay.value=Math.log10(eval(sciDisplay.value)) }
+  function factorial(){
+    let n=eval(sciDisplay.value), f=1
+    for(let i=1;i<=n;i++) f*=i
+    sciDisplay.value=f
+  }
+</script>
+
+</body>
+</html>
+
+
